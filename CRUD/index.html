@@ -11,7 +11,7 @@
     <section class="content">
         <div class="form__content">
             <h1>Formulario</h1>
-            <form action="" class="formulario" novalidate>
+            <form method="POST" class="formulario" novalidate>
                 <input type="text" id= "name" name="Nombre" placeholder="Nombre" autocomplete="off" required>
                 <input type="text" id= "lastname" name="Apellido" placeholder="Apellido" autocomplete="off" required>
                 <input type="text" id= "telephone" name="Telefono" placeholder="Telefono" autocomplete="off" required>
@@ -19,9 +19,7 @@
                 <input type="text" id= "email" name="Correo" placeholder="Correo Electronico" autocomplete="off"required >
                 <select name="documentType" id="documentType" placeholer="Seleccione su documento" required>    
                     <option value="" selected>Seleccione...</option>     
-                    <option value="Cedula">Cedula de ciudadania</option>
-                    <option value="Tarjeta" >Tarjeta de identidad</option>
-                    <option value="Pasaporte">Pasaporte</option>           
+       
                 </select>
                 <input type="text" id="documento" name="documento" placeholder="Documento" required>
                 <label>
@@ -31,6 +29,10 @@
             </form>
         </div>
     </section>
+
+    <div class="content_button">
+    <a href="typeDocument.html" class="insertbutton"> Insertar documento </a>
+    </div>
 </body>
 <script src="app.js" type="module"></script>
 

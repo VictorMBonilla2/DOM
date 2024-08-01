@@ -53,6 +53,14 @@ export function verificarInput(lista){
                     console.log("Caracter no valido."); 
                 }
             }
+            else if (element.name==="DocumentoTipo") {
+                if(Valdartexto(event.key)){
+                    console.log("Caracter ingresado");
+                }else{
+                    event.preventDefault()
+                    console.log("Caracter no valido."); 
+                }
+            }
         })
     });
 }
