@@ -1,9 +1,12 @@
+import { listaUsuarios } from "./listausuarios.js";
+import { vaciarInputs } from "./RemoverInput.js";
 import { validarFormulario } from "./validarFormulario.js";
 
 export async function EjecutarValidacion(link,data, e,lista) {
     const result = await validarFormulario(e,lista);
     console.log(result);
     if (result){
+        vaciarInputs(lista);
         try {
             const response = await fetch(link, {
                 method: "POST",
@@ -21,5 +24,7 @@ export async function EjecutarValidacion(link,data, e,lista) {
             console.error("There was a problem with the fetch operation:", error);
 
         }
+
+        listaUsuarios();
     }
 }

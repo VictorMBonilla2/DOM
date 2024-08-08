@@ -8,32 +8,66 @@
 </head>
 <body>
 
-    <section class="content">
-        <div class="form__content">
-            <h1>Formulario</h1>
-            <form method="POST" class="formulario" novalidate>
-                <input type="text" id= "name" name="Nombre" placeholder="Nombre" autocomplete="off" required>
-                <input type="text" id= "lastname" name="Apellido" placeholder="Apellido" autocomplete="off" required>
-                <input type="text" id= "telephone" name="Telefono" placeholder="Telefono" autocomplete="off" required>
-                <input type="text" id= "direccion" name="Direccion" placeholder="Dirección" autocomplete="off" required>
-                <input type="text" id= "email" name="Correo" placeholder="Correo Electronico" autocomplete="off"required >
-                <select name="documentType" id="documentType" placeholer="Seleccione su documento" required>    
-                    <option value="" selected>Seleccione...</option>     
-       
-                </select>
-                <input type="text" id="documento" name="documento" placeholder="Documento" required>
-                <label>
-                    <input type="checkbox" id="terms" /> Terminos y Condiciones
-                </label>
-                <button type="submit" id="boton">Enviar Formulario</button>
-            </form>
+    <section class="screen">
+        <div class="content">
+            <div class="form__content">
+                <h1>Formulario</h1>
+                <form method="POST" class="formulario" novalidate>
+                    <input type="text" id= "name" name="Nombre" placeholder="Nombre" autocomplete="off" required>
+                    <input type="text" id= "lastname" name="Apellido" placeholder="Apellido" autocomplete="off" required>
+                    <input type="text" id= "telephone" name="Telefono" placeholder="Telefono" autocomplete="off" required>
+                    <input type="text" id= "direccion" name="Direccion" placeholder="Dirección" autocomplete="off" required>
+                    <input type="text" id= "email" name="Correo" placeholder="Correo Electronico" autocomplete="off"required >
+                    <select name="documentType" id="documentType" placeholer="Seleccione su documento" required>        
+            
+                    </select>
+                    <input type="text" id="documento" name="documento" placeholder="Documento" required>
+                    <label>
+                        <input type="checkbox" id="terms" /> Terminos y Condiciones
+                    </label>
+                    <button type="submit" id="boton">Enviar Formulario</button>
+                </form>
+            </div>
         </div>
-    </section>
 
+    
+
+        <div class="content_list">
+
+        </div>
+        <template>
+            <thead>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="nombre"></td>
+                    <td class="apellido"></td>
+                    <td class="telefono"></td>
+                    <td class="tipo"></td>
+                    <td class="documento"></td>
+                    <td class="email"></td>
+                </tr>
+         
+            </tbody>
+        </template>
+    </section>
     <div class="content_button">
     <a href="typeDocument.html" class="insertbutton"> Insertar documento </a>
     </div>
+    <div class="content_button">
+        <a href="listausuarios.html" class="insertbutton"> Ver lista usuarios </a>
+    </div>
+    
 </body>
+<script type="module" src="listausuarios.js"></script>
 <script src="app.js" type="module"></script>
 
 </html>

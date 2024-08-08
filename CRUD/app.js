@@ -7,6 +7,9 @@ import { Escucharteclado } from "./EscucharTeclado.js";
 import { EjecutarValidacion } from "./EjecutarValidacion.js";
 
 import { obtenerTipoDocumento } from "./obtenerTipoDocumento.js";
+import { LlenarSelectDocumento } from "./selectDocument.js";
+import { email } from "./email.js";
+import { listaUsuarios } from "./listausuarios.js";
 
 
 
@@ -43,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             tipodocumento.classList.remove("errorInput")
         }
     })
-    
+    listaUsuarios();
 });
 
 $formulario.addEventListener("submit",(e) =>{
@@ -59,18 +62,12 @@ $formulario.addEventListener("submit",(e) =>{
         numerodocumento: numerodocumento.value,
     }
     EjecutarValidacion("http://localhost:3000/users",data , e, lista)
+
+    
 })
 
 const listatipodocumento= await obtenerTipoDocumento();
 
-
-listatipodocumento.forEach(elemento => {
-    const documentipo = document.createElement("option")
-    documentipo.setAttribute("value", elemento.tipodocumento);
-    documentipo.text = elemento.tipodocumento
-    tipodocumento.appendChild(documentipo);
-});
-
-
+tipodocumento.appendChild(LlenarSelectDocumento(listatipodocumento))
  
 verificarInput(lista)
