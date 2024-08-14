@@ -48,6 +48,35 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     listaUsuarios();
 });
+const responseDocument = await fetch("http://localhost:3000/users");
+
+const result1 = await responseDocument.json();
+console.log(result1);
+
+
+document.addEventListener("click",(event)=>{
+    if(event.target.matches(".modificar")){
+        let evento= event.target;
+        console.log(evento);
+        
+        console.log("Has presionado "+  evento.classList[1]);
+
+        let id= evento.getAttribute("id-modificar")
+        
+        console.log(result1.find((element) => element.id === id));
+        
+        
+        
+        
+        
+
+    }
+    if(event.target.matches(".eliminar")){
+        console.log("Has presionado "+  event.target.classList[1]);
+    }
+
+
+})
 
 $formulario.addEventListener("submit",(e) =>{
     e.preventDefault() 

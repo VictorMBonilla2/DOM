@@ -161,6 +161,19 @@
   background-color: rgb(255, 255, 255);
 }
 
+.button{
+  padding: 5px;
+  border: solid 3px #cecece;
+  border-radius: 10px;
+  outline: none;
+  width: 45%;
+  transition: 1s;
+  background-color: rgb(17, 189, 17);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+
+}
 
 
 

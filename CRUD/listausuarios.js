@@ -5,6 +5,8 @@
 // const result1 = await responseDocument.json();
 // const cantproperty = Object.keys(result1[0])
 
+import { ObtenerDocumentos } from "./ObtenerDocumentos.js";
+
     
 // const header_encabezado = document.createElement("div")
 // header_encabezado.classList.add("list_header")
@@ -40,6 +42,7 @@ export async function listaUsuarios() {
 
     const tabla = document.querySelector("template").content;
     const contenidoTabla= document.querySelector(".content_list")
+    contenidoTabla.innerHTML=""; //Vaciar contenido para refrescar.
     const fragmento = document.createDocumentFragment();
 
 const responseDocument = await fetch("http://localhost:3000/users");
@@ -47,6 +50,9 @@ const responseDocument = await fetch("http://localhost:3000/users");
 const result1 = await responseDocument.json();
 
 const cantproperty = Object.keys(result1[0])
+
+const listaDocumentos= await ObtenerDocumentos();
+console.log(listaDocumentos);
 
 
 const clone = tabla.cloneNode(true);
@@ -66,12 +72,33 @@ result1.forEach(element => {
     const contenido = document.createElement("tr");
     cantproperty.forEach(key => {
         const lista = document.createElement("td");
-        let value = element[key];
+        if(key ==="tipoDocumento"){
+            console.log("hola");           
+            const nombre = (listaDocumentos.find(({ id }) => id === element[key])).tipodocumento;
+            let value = nombre;
+            lista.textContent = value;
+            lista.classList.add(key)
+            contenido.appendChild(lista);                          
+        }else{
+            let value = element[key];
             lista.textContent = value;
             lista.classList.add(key)
             contenido.appendChild(lista); 
+        }
     });
+    const editbutton = document.createElement("button");
+    editbutton.classList.add("button", "modificar")
+    editbutton.setAttribute("id-modificar",element.id)
+    editbutton.textContent="Editar"
+    const deletebutton = document.createElement("button");
+    deletebutton.classList.add("button", "eliminar")
+    deletebutton.setAttribute("id-eliminar",element.id)
+    deletebutton.textContent="Eliminar"
+    contenido.appendChild(editbutton)
+    contenido.appendChild(deletebutton)
     hola.appendChild(contenido);
+
+
 });
 
 fragmento.appendChild(hola)

@@ -11,7 +11,7 @@ export function LlenarSelectDocumento (listaDocumentos){
             contadorTipoDocumento++;
         }
         const documentipo = document.createElement("option")
-        documentipo.setAttribute("value", elemento.tipodocumento);
+        documentipo.setAttribute("value", elemento.id);
         documentipo.text = elemento.tipodocumento
         fragmentoTipoDocumento.appendChild(documentipo);
     });
