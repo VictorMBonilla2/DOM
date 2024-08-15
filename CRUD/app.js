@@ -10,11 +10,14 @@ import { obtenerTipoDocumento } from "./obtenerTipoDocumento.js";
 import { LlenarSelectDocumento } from "./selectDocument.js";
 import { email } from "./email.js";
 import { listaUsuarios } from "./listausuarios.js";
-
+import { ObtenerUsuarios } from "./ObtenerUsuarios.js";
+import { enviar } from "./ajax.js";
+import { URL } from "./config.js";
 
 
 const $formulario = document.querySelector("form")
 const $required = document.querySelectorAll("form[novalidate] > *[required]")
+const id_usuario = document.querySelector("#id_user")
 const nombre = document.querySelector("#name")
 const appelido = document.querySelector("#lastname")
 const telefono = document.querySelector("#telephone")
@@ -24,6 +27,11 @@ const tipodocumento = document.querySelector("#documentType")
 const numerodocumento =document.querySelector("#documento")
 const terms = document.querySelector("#terms")
 const boton = document.querySelector("#boton")
+const mostrarLista= document.querySelector(".content_list")
+console.log(mostrarLista);
+
+
+
 
 const lista = [nombre,appelido, telefono,direccion,correo,tipodocumento,numerodocumento]
 
@@ -48,39 +56,73 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     listaUsuarios();
 });
-const responseDocument = await fetch("http://localhost:3000/users");
 
-const result1 = await responseDocument.json();
+
+const result1 = await ObtenerUsuarios();
 console.log(result1);
 
 
-document.addEventListener("click",(event)=>{
+document.addEventListener("click", async (event)=>{
     if(event.target.matches(".modificar")){
         let evento= event.target;
-        console.log(evento);
-        
-        console.log("Has presionado "+  evento.classList[1]);
-
         let id= evento.getAttribute("id-modificar")
-        
-        console.log(result1.find((element) => element.id === id));
-        
-        
-        
-        
-        
+ 
+        let data= await enviar(`users/${id}`, {
+            method: "PATCH",
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        console.log(data);
 
+        const { id: Id_de_usuario, nombre: Nombre, appelido: Apellido, telefono: Telefono, direccion: Direccion, correo: Correo_Electronico, tipoDocumento: Tipo_de_Documento, numerodocumento: Numero_de_documento} = data;
+        $formulario.setAttribute("id_usuario", Id_de_usuario)
+        nombre.value= Nombre;
+        appelido.value = Apellido
+        telefono.value = Telefono
+        direccion.value = Direccion
+        correo.value = Correo_Electronico
+        tipodocumento.value = Tipo_de_Documento
+        numerodocumento.value=Numero_de_documento
+        boton.classList.add("update")
+        console.log(Id_de_usuario);
+        console.log($formulario.attributes.getNamedItem("id_usuario"));
+        
     }
     if(event.target.matches(".eliminar")){
         console.log("Has presionado "+  event.target.classList[1]);
+        let evento= event.target
+        let id= evento.getAttribute("id-eliminar")
+        console.log(id);
+        
+        let data= await enviar(`users/${id}`, {
+            method: "DELETE",
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        console.log(data);
+        
+        document.getElementById(`316a`).remove();
+        
     }
 
 
+    if(event.target.matches(".lista_button")){
+        console.log("hola");
+        mostrarLista.style.top="0px"
+    }
+
 })
+
 
 $formulario.addEventListener("submit",(e) =>{
     e.preventDefault() 
     Escucharteclado($formulario,lista)
+
+    let id_user= $formulario.attributes.getNamedItem("id_usuario");
+
+    
     let data = {
         nombre: nombre.value,
         appelido: appelido.value,
@@ -90,7 +132,19 @@ $formulario.addEventListener("submit",(e) =>{
         tipoDocumento: tipodocumento.value,
         numerodocumento: numerodocumento.value,
     }
-    EjecutarValidacion("http://localhost:3000/users",data , e, lista)
+
+    
+    if(boton.classList.contains("update") && id_user !== null){
+        console.log("Inicia proceso de editar usuario.");
+        console.log(data);
+       
+        EjecutarValidacion(`${URL}/users/${id_user.value}`,data , e, lista, true)
+    }else {
+        console.log("Se inica proceso de envio");
+        
+        EjecutarValidacion(`${URL}/users`,data , e, lista, false)
+    }
+
 
     
 })
