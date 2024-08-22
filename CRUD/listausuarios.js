@@ -6,26 +6,38 @@ import { ObtenerUsuarios } from "./ObtenerUsuarios.js";
 
 
 
-export async function listaUsuarios() {
-
-    const tabla = document.querySelector("template").content;
-    const contenidoTabla= document.querySelector(".content_list")
-    contenidoTabla.innerHTML=""; //Vaciar contenido para refrescar.
+export async function listaUsuarios(paginaActual) {
+    console.log("pagina actual: "+paginaActual);
     const fragmento = document.createDocumentFragment();
+    const resultado = await ObtenerUsuarios(paginaActual);
+    const listaDocumentos= await ObtenerDocumentos();
 
+    const encabezado = document.querySelector("template").content;
+    const contenidoTabla= document.querySelector(".content_list>table")
+    contenidoTabla.innerHTML="";
+    const result1 =  resultado.data;
+    const cantproperty = Object.keys(result1[0]).slice(0, -1);
+    console.log(resultado);
+    
+    const nav = document.querySelector(".navigation")
+    const first = resultado.first;
+    const prev = resultado.prev;
+    const next = resultado.next;
+    const last = resultado.last;
 
-const result1 =  await ObtenerUsuarios();
+    nav.querySelector(".first").disabled = prev ? false :true 
+    nav.querySelector(".prev").disabled = prev ? false :true 
+    nav.querySelector(".next").disabled = next ? false :true 
+    nav.querySelector(".last").disabled = next ? false :true 
 
-const cantproperty = Object.keys(result1[0]).slice(2);
+    nav.querySelector(".first").setAttribute("data-first", first)
+    nav.querySelector(".prev").setAttribute("data-prev", prev)
+    nav.querySelector(".next").setAttribute("data-next", next)
+    nav.querySelector(".last").setAttribute("data-last", last)
 
-console.log(cantproperty);
-
-const listaDocumentos= await ObtenerDocumentos();
-console.log(listaDocumentos);
-
-
-const clone = tabla.cloneNode(true);
+const clone = encabezado.cloneNode(true);
 let th = clone.querySelectorAll("th");
+
 let contador = 0;
 const header_encabezado = clone.querySelector("thead");
 cantproperty.forEach(elemento => {
@@ -36,7 +48,9 @@ cantproperty.forEach(elemento => {
 });
 fragmento.appendChild(header_encabezado);
 
-const hola = document.createElement("tbody")
+
+
+const cuerpo = document.createElement("tbody")
 result1.forEach(element => {
     const contenido = document.createElement("tr");
     contenido.setAttribute("id", element.id)
@@ -65,12 +79,12 @@ result1.forEach(element => {
     deletebutton.textContent="Eliminar"
     contenido.appendChild(editbutton)
     contenido.appendChild(deletebutton)
-    hola.appendChild(contenido);
+    cuerpo.appendChild(contenido);
 
 
 });
 
-fragmento.appendChild(hola)
+fragmento.appendChild(cuerpo)
 
 
 contenidoTabla.appendChild(fragmento)

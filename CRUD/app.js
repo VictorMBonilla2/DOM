@@ -14,7 +14,7 @@ import { ObtenerUsuarios } from "./ObtenerUsuarios.js";
 import { enviar } from "./ajax.js";
 import { URL } from "./config.js";
 
-
+//Formulario
 const $formulario = document.querySelector("form")
 const $required = document.querySelectorAll("form[novalidate] > *[required]")
 const id_usuario = document.querySelector("#id_user")
@@ -28,7 +28,16 @@ const numerodocumento =document.querySelector("#documento")
 const terms = document.querySelector("#terms")
 const boton = document.querySelector("#boton")
 const mostrarLista= document.querySelector(".content_list")
-console.log(mostrarLista);
+const paginador= document.querySelector(".navigation")
+
+//Lista
+const primero = paginador.querySelector(".first")
+const anterior = paginador.querySelector(".prev")
+const siguiente = paginador.querySelector(".next")
+const ultimo = paginador.querySelector(".last")
+
+//Template
+
 
 
 
@@ -54,15 +63,31 @@ document.addEventListener("DOMContentLoaded", function() {
             tipodocumento.classList.remove("errorInput")
         }
     })
-    listaUsuarios();
+    listaUsuarios(1);
 });
 
-
-const result1 = await ObtenerUsuarios();
-console.log(result1);
-
-
 document.addEventListener("click", async (event)=>{
+   
+    if(event.target===primero){
+        console.log("presiono Ultimo");     
+        listaUsuarios(primero.dataset.first)
+    }
+    if(event.target===anterior){
+        console.log("presiono anterior");
+        
+        listaUsuarios(anterior.dataset.prev)
+    }
+    if(event.target===siguiente){
+        console.log("presiono siguiente");
+        console.log(siguiente.dataset.next);
+        listaUsuarios(siguiente.dataset.next)
+    }
+    if(event.target===ultimo){
+        console.log("presiono siguiente");
+        console.log(ultimo.dataset.last);
+        listaUsuarios(ultimo.dataset.last)
+    }
+    
     if(event.target.matches(".modificar")){
         let evento= event.target;
         let id= evento.getAttribute("id-modificar")
@@ -92,19 +117,24 @@ document.addEventListener("click", async (event)=>{
     if(event.target.matches(".eliminar")){
         console.log("Has presionado "+  event.target.classList[1]);
         let evento= event.target
-        let id= evento.getAttribute("id-eliminar")
-        console.log(id);
-        
-        let data= await enviar(`users/${id}`, {
-            method: "DELETE",
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        })
-        console.log(data);
-        
-        document.getElementById(`316a`).remove();
-        
+        let id= evento.getAttribute("id-eliminar");
+       
+        let nombre = document.getElementById(id);
+        let nombre2 = nombre.querySelector(".nombre")        
+        if(confirm("Estas seguro de eliminar al usuario "+ nombre2.te)){
+
+            let data= await enviar(`users/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                }
+            })
+            console.log(data);
+            
+            document.getElementById(id).remove();
+            
+        }
+
     }
 
 

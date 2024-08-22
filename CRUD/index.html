@@ -13,11 +13,11 @@
             <div class="form__content">
                 <h1>Formulario</h1>
                 <form method="POST" class="formulario" novalidate>
-                    <input type="text" id= "name" name="Nombre" placeholder="Nombre" autocomplete="off" required>
-                    <input type="text" id= "lastname" name="Apellido" placeholder="Apellido" autocomplete="off" required>
-                    <input type="text" id= "telephone" name="Telefono" placeholder="Telefono" autocomplete="off" required>
-                    <input type="text" id= "direccion" name="Direccion" placeholder="Dirección" autocomplete="off" required>
-                    <input type="text" id= "email" name="Correo" placeholder="Correo Electronico" autocomplete="off"required >
+                    <input type="text" id= "name" name="Nombre" placeholder="Nombre" autocomplete="on" required>
+                    <input type="text" id= "lastname" name="Apellido" placeholder="Apellido" autocomplete="on" required>
+                    <input type="text" id= "telephone" name="Telefono" placeholder="Telefono" autocomplete="on" required>
+                    <input type="text" id= "direccion" name="Direccion" placeholder="Dirección" autocomplete="on" required>
+                    <input type="text" id= "email" name="Correo" placeholder="Correo Electronico" autocomplete="on"required >
                     <select name="documentType" id="documentType" placeholer="Seleccione su documento" required>        
             
                     </select>
@@ -33,11 +33,17 @@
     
 
         <div class="content_list">
-
+            <table>
+                <div class="navigation">
+                <button class="first"> Primero</button>   
+                <button class="prev"> atras</button>
+                <button class="next">siguiente</button>
+                <button class="last"> Ultimo</button>
+                </div>
+            </table>
         </div>
         <template>
             <thead>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>

@@ -179,7 +179,17 @@
 
 }
 
+td{
+  width: 12%;
+  text-align: center;
+}
 
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  border-radius: 10px;
+}
 
 /* html {
     font-family: "helvetica neue", helvetica, arial, sans-serif;
